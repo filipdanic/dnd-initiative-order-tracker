@@ -18,6 +18,7 @@ export default ({
       type="text"
       value={name}
       onChange={e => onNameChange(id, e)}
+      className="wide-input"
     />
 
     <Input

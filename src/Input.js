@@ -1,12 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 export default ({
+  className,
   label,
   type,
   value,
   onChange,
 }) =>
-  <label>
+  <label className={className}>
     {label}:
-    <input type={type} value={value} onChange={onChange} />
+    <input
+      type={type}
+      value={value}
+      onChange={onChange}
+    />
   </label>

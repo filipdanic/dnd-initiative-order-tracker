@@ -1,10 +1,16 @@
+.header {
+  width: 480px;
+  margin: 12px auto;
+  text-align: center;
+}
+
 .card {
-  margin-bottom: 12px;
-  width: 400px;
-  padding: 8px;
-  box-shadow: #eeeeee 1px 1px 1px;
+  width: 480px;
+  box-shadow: #eee 1px 1px 1px;
   display: flex;
   flex-direction: row;
+  margin: 12px auto;
+  padding: 12px 6px;
 }
 
 .card input {
@@ -12,15 +18,31 @@
   border-top: none;
   border-left: none;
   border-right: none;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .card label {
-  flex: 3;
+  flex: 4;
   font-size: 10px;
+  padding: 0 12px;
 }
 
 .card button {
   flex: 1;
   cursor: pointer;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  background: none;
+  opacity: 0.5;
+  transition: 180ms all;
+  font-size: 14px;
+}
+
+.card button:hover {
+  opacity: 1;
+}
+
+.card label.wide-input {
+  flex: 14;
 }

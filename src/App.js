@@ -73,7 +73,13 @@ class App extends Component {
     const { elements } = this.state;
     return (
       <div>
-        <button onClick={this.addCard}>Add</button>
+        <div className="header">
+          <button
+            onClick={this.addCard}
+          >
+            Add New Card
+          </button>
+        </div>
         {elements.map(element =>
           <Card
             key={element.id}
