@@ -1,45 +1,56 @@
 import React, { Component } from 'react';
-import Input from './Input';
+import Input from './components/Input';
+import Button from './components/Button';
 import { rollD20 } from './utils';
+import { ElementType } from './constants';
+import PropTypes from 'prop-types';
 
-export default ({
-  id,
-  name,
-  initiative,
-  hitpoints,
-  onNameChange,
-  onInitiativeChange,
-  onHitpointsChange,
-  onRemove,
-}) =>
-  <div className="card">
-    <Input
-      label="Name"
-      type="text"
-      value={name}
-      onChange={e => onNameChange(id, e)}
-      className="wide-input"
-    />
+class Card extends Component {
+  render() {
+    const { element, onUpdateField, onInitiativeChange, onRemove } = this.props;
+    return (
+      <div className="card">
+        <Input
+          label="Name"
+          type="text"
+          value={element.name}
+          onChange={e => onUpdateField(element.id, e, 'name')}
+          className="wide-input"
+        />
 
-    <Input
-      label="Initiative"
-      type="number"
-      value={initiative}
-      onChange={e => onInitiativeChange(id, e)}
-    />
+        <Input
+          label="Initiative"
+          type="number"
+          value={element.initiative}
+          onChange={e => onInitiativeChange(element.id, e)}
+        />
 
-    <button
-      onClick={() => onInitiativeChange(id, { target: { value: rollD20() } } )}
-    >
-      d20
-    </button>
+        <Button
+          onClick={() => onInitiativeChange(element.id, { target: { value: rollD20() } } )}
+          label="d20"
+        />
 
-    <Input
-      label="Hitpoints"
-      type="number"
-      value={hitpoints}
-      onChange={e => onHitpointsChange(id, e)}
-    />
+        <Input
+          label="Hitpoints"
+          type="number"
+          value={element.hitpoints}
+          onChange={e => onUpdateField(element.id, e, 'hitpoints')}
+        />
 
-    <button onClick={() => onRemove(id)}>X</button>
-  </div>;
+        <Button
+          onClick={() => onRemove(element.id)}
+          label="X"
+        />
+      </div>
+    )    ;
+  }
+}
+
+Card.propTypes = {
+  element: ElementType,
+  onUpdateField: PropTypes.func,
+  onInitiativeChange: PropTypes.func,
+  onRemove: PropTypes.func,
+};
+
+export default Card;

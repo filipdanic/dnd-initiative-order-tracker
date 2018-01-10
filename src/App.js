@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import FlipMove from 'react-flip-move';
 import './App.css';
+import Button from './components/Button';
 import Card from './Card';
-import { randomId } from './utils';
+import { randomId, updateListElement } from './utils';
 import { initialState } from './constants';
 
 class App extends Component {
@@ -10,47 +12,29 @@ class App extends Component {
     this.state = {
       elements: initialState,
     };
-    this.updateName = this.updateName.bind(this);
-    this.updateInitiative = this.updateInitiative.bind(this);
-    this.updateHitpoints = this.updateHitpoints.bind(this);
-    this.addCard = this.addCard.bind(this);
-    this.removeElement = this.removeElement.bind(this);
   }
 
-  updateName(id, e) {
+  updateField = (id, e, field) => {
     const { value } = e.target;
-    const elements = this.state.elements;
-    const index = elements.findIndex(el => el.id === id);
-    elements[index].name = value;
-    this.setState({ elements });
-  }
+    this.setState({
+      elements: updateListElement(this.state.elements, id, field, value)
+    });
+  };
 
-  updateHitpoints(id, e) {
-    const { value } = e.target;
-    const elements = this.state.elements;
-    const index = elements.findIndex(el => el.id === id);
-    elements[index].hitpoints = Number(value);
-    this.setState({ elements });
-  }
-
-  updateInitiative(id, e) {
+  updateInitiative = (id, e) => {
     clearTimeout(this.timeout_);
-    const { value } = e.target;
-    const elements = this.state.elements;
-    const index = elements.findIndex(el => el.id === id);
-    elements[index].initiative = Number(value);
-    this.setState({ elements });
+    this.updateField(id, e, 'initiative');
     this.timeout_ = setTimeout(() => this.sortElements(), 500);
-  }
+  };
 
-  sortElements() {
+  sortElements = () => {
     const { elements } = this.state;
     this.setState({
       elements: elements.sort((l, r) => r.initiative - l.initiative)
     });
-  }
+  };
 
-  addCard() {
+  addCard = () => {
     const { elements } = this.state;
     elements[elements.length] = {
       id: randomId(),
@@ -61,38 +45,41 @@ class App extends Component {
     this.setState({
       elements: elements.sort((l, r) => r.initiative - l.initiative)
     });
-  }
+  };
 
-  removeElement(id) {
+  removeElement = (id) => {
     let { elements } = this.state;
     elements = elements.filter(el => el.id !== id);
     this.setState({ elements });
-  }
+  };
 
   render() {
     const { elements } = this.state;
     return (
       <div>
         <div className="header">
-          <button
+          <Button
             onClick={this.addCard}
-          >
-            Add New Card
-          </button>
-        </div>
-        {elements.map(element =>
-          <Card
-            key={element.id}
-            name={element.name}
-            initiative={element.initiative}
-            hitpoints={element.hitpoints}
-            id={element.id}
-            onNameChange={this.updateName}
-            onInitiativeChange={this.updateInitiative}
-            onHitpointsChange={this.updateHitpoints}
-            onRemove={this.removeElement}
+            label="Add New Card"
           />
-        )}
+        </div>
+        <FlipMove
+          duration={240}
+          delay={0}
+          staggerDurationBy={260}
+          staggerDelayBy={0}
+          easing="cubic-bezier(0.13, 1.15, 0.8, 1.5)"
+        >
+          {elements.map(element =>
+            <Card
+              key={element.id}
+              element={element}
+              onUpdateField={this.updateField}
+              onInitiativeChange={this.updateInitiative}
+              onRemove={this.removeElement}
+            />
+          )}
+        </FlipMove>
       </div>
     );
   }

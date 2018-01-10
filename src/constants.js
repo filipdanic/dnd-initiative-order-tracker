@@ -1,4 +1,5 @@
 import { randomId } from './utils';
+import PropTypes from 'prop-types';
 
 export const initialState = [{
   id: randomId(),
@@ -21,3 +22,16 @@ export const initialState = [{
   initiative: 17,
   hitpoints: 32,
 }];
+
+export const ElementType = PropTypes.shape({
+  id: PropTypes.number,
+  name: PropTypes.string,
+  hitpoints: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string]
+  ),
+  initiative: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string]
+  ),
+});
