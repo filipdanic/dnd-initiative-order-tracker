@@ -6,6 +6,8 @@ All of the code was developed during my [🔴 Twitch live stream](https://www.tw
 
 You’re welcome to read the code and submit a PR with new features, bugfixes, or code quality improvements.
 
+If you enjoyed the videos and would like to learn React in-depth, check out my video course [Hands-on Web Development wiht React.](https://danicfilip.com/2018/hands-on-web-development-with-react-course/) 
+
 ## Features
 
 ### Track Combatants and Roll a D20
